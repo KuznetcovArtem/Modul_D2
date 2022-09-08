@@ -1,0 +1,41 @@
+>>> u1 = User.objects.create_user(username='Artem')  
+>>> u2 = User.objects.create_user(username='Ivan')  
+>>> Author.objects.create(authorUser=u1)
+<Author: Author object (1)>
+>>> Author.objects.create(authorUser=u2) 
+<Author: Author object (2)>
+>>> Category.objects.create(name='Sport')
+<Category: Category object (1)>
+>>> Category.objects.create(name='News')  
+<Category: Category object (2)>
+>>> Category.objects.create(name='Interesting')
+<Category: Category object (3)>
+>>> Category.objects.create(name='Economy')     
+<Category: Category object (4)>
+>>> author = Author.objects.get(id=1)
+>>> Post.objects.create(author=author, categoryType='NW', title='sometitle', text='someBIGtext')                                                        
+<Post: Post object (1)>
+>>> Post.objects.create(author=author, categoryType='NW', title='sometitle_two', text='someBIGtext_two')
+<Post: Post object (2)>
+>>> Post.objects.create(author=author, categoryType='AR', title='sometitle_three', text='someBIGtext_three')
+<Post: Post object (3)>
+>>> Post.objects.create(author=author, categoryType='AR', title='sometitle_four', text='someBIGtext_four')   
+<Post: Post object (4)>
+>>> Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1))                                    
+>>> Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1)) 
+>>> Post.objects.get(id=3).postCategory.add(Category.objects.get(id=2)) 
+>>> Post.objects.get(id=4).postCategory.add(Category.objects.get(id=3)) 
+>>> Post.objects.get(id=4).postCategory.add(Category.objects.get(id=4))
+>>> Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='comment_one')
+<Comment: Comment object (1)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=1).authorUser, text='comment_two') 
+<Comment: Comment object (2)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=2).authorUser, text='comment_three') 
+<Comment: Comment object (3)>
+>>> Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=2).authorUser, text='comment_four')   
+<Comment: Comment object (4)>
+>>> Comment.objects.get(id=1).like()
+>>> Comment.objects.get(id=2).like() 
+>>> Comment.objects.get(id=3).like() 
+>>> Comment.objects.get(id=4).dislike()
+>>> Comment.objects.get(id=4).dislike()
